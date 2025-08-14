@@ -35,7 +35,7 @@ ycm_core = ImportCore()
 INCLUDE_FLAGS = [ '-isystem', '-I', '-iquote', '-isysroot', '--sysroot',
                   '-gcc-toolchain', '-include-pch', '-include', '-iframework',
                   '-F', '-imacros', '-idirafter', '-B', '-imsvc' ]
-INCLUDE_FLAGS_WIN_STYLE = [ '/I', '-imsvc' ]
+INCLUDE_FLAGS_WIN_STYLE = [ '/I', '-imsvc', '/imsvc' ]
 PATH_FLAGS =  [ '--sysroot=' ] + INCLUDE_FLAGS
 
 # We need to remove --fcolor-diagnostics because it will cause shell escape
