@@ -108,7 +108,7 @@ BUILD_ERROR_MESSAGE = (
   'issue tracker, including the entire output of this script (with --verbose) '
   'and the invocation line used to run it.' )
 
-CLANGD_VERSION = '21.1.3'
+CLANGD_VERSION = '21.1.8'
 CLANGD_BINARIES_ERROR_MESSAGE = (
   'No prebuilt Clang {version} binaries for {platform}. '
   'You\'ll have to compile Clangd {version} from source '
@@ -1170,33 +1170,6 @@ def EnableTypeScriptCompleter( args ):
 
 
 def GetClangdTarget():
-  if OnWindows():
-    return [
-      ( 'clangd-{version}-win64',
-        'f3391f8255da1d101e8868a0f5b0af28cd9b1729ade6c0857286a438373dc5f3' ),
-      ( 'clangd-{version}-win32',
-        'f2a60a8666ff79361abcf00b176c35384ccb799e86e93608360d510e99904a2e' ) ]
-  if OnMac():
-    if OnArm():
-      return [
-        ( 'clangd-{version}-arm64-apple-darwin',
-          'b40b580158f8d691e3c27f9652492e8904a1d6c1026186baf38c9773ec8dc671' ) ]
-    return [
-      ( 'clangd-{version}-x86_64-apple-darwin',
-        'beb0fa5208b3879aba6173bbc51c4fd1d71ddadaf75eb327b0e93f9c21eb8a58' ) ]
-  if OnAArch64():
-    return [
-      ( 'clangd-{version}-aarch64-linux-gnu',
-        '2927fa99de680a7427bc21e0e03199ae5a960119074be85fd9cd006513211b68' ) ]
-  if OnArm():
-    return [
-      None, # First list index is for 64bit archives. ARMv7 is 32bit only.
-      ( 'clangd-{version}-armv7a-linux-gnueabihf',
-        '3981e8d6b6793b7da4147733f22028fef56a8ee5e1cb56289f968f040ef1ee7e' ) ]
-  if OnX86_64():
-    return [
-      ( 'clangd-{version}-x86_64-unknown-linux-gnu',
-        'db6ee091461d28697b419595a44623772dd58466aad031e7a4f3beac9d668abe' ) ]
   raise InstallationFailed(
     CLANGD_BINARIES_ERROR_MESSAGE.format( version = CLANGD_VERSION,
                                           platform = 'this system' ) )
