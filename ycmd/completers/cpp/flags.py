@@ -252,6 +252,10 @@ def ShouldAllowWinStyleFlags( flags ):
     # check if we are using a compiler like clang-cl.
     return bool( CL_COMPILER_REGEX.search( flags[ 0 ] ) )
 
+  for flag in flags:
+    if flag.startswith( '--target=' ):
+      return flag.endswith( 'msvc' )
+
   return False
 
 
@@ -297,9 +301,9 @@ def PrepareFlagsForClang( flags,
     # for an explanation of the flag and
     # https://code.google.com/p/include-what-you-use/source/detail?r=566
     # for a similar issue.
-    if OnWindows():
+    if OnWindows() or ShouldAllowWinStyleFlags( flags ):
       flags.append( '-fno-delayed-template-parsing' )
-    if OnMac():
+    if OnMac() and not ShouldAllowWinStyleFlags( flags ):
       flags = AddMacIncludePaths( flags )
     flags = _EnableTypoCorrection( flags )
 
